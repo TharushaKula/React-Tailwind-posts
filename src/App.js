@@ -1,9 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
-import posts from './posts.json';
+import React, { useState, useEffect } from 'react';
 
 function App() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json())
+      .then(data => setPosts(data))
+      .catch(error => console.error('Error fetching posts:', error));
+  }, []); // Empty dependency array to run effect only once on component mount
+
   return (
     <div className="App grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
       {posts.map((post, index) => (
